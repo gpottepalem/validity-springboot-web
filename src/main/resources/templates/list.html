@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers</title>
+</head>
+<body>
+    <h1>Potential Duplicates</h1>
+    <div th:each="customer : ${potentialDuplicateCustomers}">
+        <div th:text="${customer}"/>
+    </div>
+
+    <h1>None Duplicates</h1>
+    <div th:each="customer : ${nonDuplicateCustomers}">
+        <div th:text="${customer}"/>
+    </div>
+</body>
+</html>
