@@ -1,9 +1,11 @@
 package com.giri.validity.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.springframework.http.MediaType.*;
@@ -26,7 +28,7 @@ public class CustomerController {
         try {
             results = customerProcessorService.processCustomerData("/normal.csv");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
         modelAndView.getModel().put("potentialDuplicateCustomers", results.getPotentialDuplicateCustomers());
         modelAndView.getModel().put("nonDuplicateCustomers", results.getNonDuplicates());
