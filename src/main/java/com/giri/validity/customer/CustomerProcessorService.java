@@ -5,12 +5,8 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,13 +31,11 @@ public class CustomerProcessorService {
         if (customersDataFile == null) {
             customersDataFile = "/normal.csv";
         }
-
-        URL fileURL = this.getClass().getResource(customersDataFile);
-        if(fileURL == null) {
+        InputStream is = this.getClass().getResourceAsStream(customersDataFile);
+        if (is == null) {
             return null;
         }
-
-        Reader reader = Files.newBufferedReader(Paths.get(this.getClass().getResource(customersDataFile).toURI()));
+        Reader reader = new BufferedReader(new InputStreamReader(is));
         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader());
 
         List<Customer> customers = new ArrayList<>();
